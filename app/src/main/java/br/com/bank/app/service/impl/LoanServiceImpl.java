@@ -2,6 +2,7 @@ package br.com.bank.app.service.impl;
 
 import br.com.bank.app.controller.dto.LoanRequest;
 import br.com.bank.app.controller.dto.LoanResponse;
+import br.com.bank.app.factory.LoanEngine;
 import br.com.bank.app.factory.LoanFactory;
 import br.com.bank.app.model.LoanModel;
 import br.com.bank.app.service.LoanService;
@@ -11,25 +12,15 @@ import java.util.*;
 
 @Service
 public class LoanServiceImpl implements LoanService {
-    private final List<LoanFactory> factoryList;
+    private final LoanEngine loanEngine;
 
-    public LoanServiceImpl(List<LoanFactory> factoryList) {
-        this.factoryList = factoryList;
+    public LoanServiceImpl(LoanEngine loanEngine) {
+        this.loanEngine = loanEngine;
     }
 
     @Override
     public LoanResponse getLoans(LoanRequest loanRequest){
-        Map<String, LoanModel> loanMap = new HashMap<>();
-
-        for (LoanFactory loanFactory : factoryList){
-
-            boolean loanOptional = loanFactory.isAvailableLoan(loanRequest.customerDTO().getIncome(), loanRequest.customerDTO().getAge(), loanRequest.customerDTO().getLocation());
-            if (loanOptional){
-                loanMap.put(loanFactory.getLoanModel().getType(), loanFactory.getLoanModel());
-            }
-        }
-
-        List<LoanModel> loanModelList = loanMap.values().stream().toList();
-        return new LoanResponse(loanRequest.customerDTO().getName(), loanModelList);
+        List<LoanModel> loans = this.loanEngine.getLoanList(loanRequest);
+        return new LoanResponse(loanRequest.customerDTO().getName(), loans);
     }
 }
