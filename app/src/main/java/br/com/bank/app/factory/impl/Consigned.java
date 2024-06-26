@@ -7,11 +7,13 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 @Component
 public class Consigned implements LoanFactory {
+    private static final String TYPE = "consigned";
+
     @Override
     public LoanModel getLoanModel() {
         return LoanModel
                 .builder()
-                .type("consigned")
+                .type(TYPE)
                 .taxes(2)
                 .build();
     }

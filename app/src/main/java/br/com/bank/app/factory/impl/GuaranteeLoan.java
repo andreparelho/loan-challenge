@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Component
 public class GuaranteeLoan implements LoanFactory {
-
+    private static final String TYPE = "guarantee";
     private final List<LoanValidator> loanValidatorList;
 
     public GuaranteeLoan(List<LoanValidator> loanValidatorList) {
@@ -22,7 +22,7 @@ public class GuaranteeLoan implements LoanFactory {
     public LoanModel getLoanModel() {
         return LoanModel
                 .builder()
-                .type("guarantee")
+                .type(TYPE)
                 .taxes(3)
                 .build();
     }
