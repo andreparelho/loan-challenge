@@ -33,7 +33,7 @@ cd br.com.bank.app
 Execute a aplicação
 ```bash
 ./mvnw spring-boot:run
-```b
+```
 
 A aplicação estará disponível em http://localhost:8080
 
