@@ -33,13 +33,9 @@ cd br.com.bank.app
 Execute a aplicação
 ```bash
 ./mvnw spring-boot:run
-```
+```b
 
 A aplicação estará disponível em http://localhost:8080
 
 ## Endpoints
 - `POST /v1/loan:` receber opcoes; 
-
-## Referência
-
- - [Desafio](https://github.com/AmeDigital/challenge-back-end-hit)
