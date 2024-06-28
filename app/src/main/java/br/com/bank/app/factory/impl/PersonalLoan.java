@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 @Component
 public class PersonalLoan implements LoanFactory {
     private static final String TYPE = "personal";
+    private static final double MINIMUM_INCOME = 1000;
 
     @Override
     public LoanModel getLoanModel() {
@@ -20,6 +21,6 @@ public class PersonalLoan implements LoanFactory {
 
     @Override
     public boolean isAvailableLoan(BigDecimal income, int age, String location) {
-        return true;
+        return income.doubleValue() >= MINIMUM_INCOME;
     }
 }
