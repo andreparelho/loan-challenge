@@ -43,7 +43,7 @@ class LoanServiceImplTest {
                 .cpf("690.243.518-98")
                 .age(26)
                 .location("SP")
-                .income(BigDecimal.valueOf(4500))
+                .income(BigDecimal.valueOf(6500))
                 .build();
 
         this.loanRequest = new LoanRequest(customerDTO);
