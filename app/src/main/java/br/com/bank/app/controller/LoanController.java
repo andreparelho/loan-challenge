@@ -23,5 +23,4 @@ public class LoanController {
         var response = this.loanService.getLoans(loanRequest);
         return ResponseEntity.ok(response);
     }
-
 }
