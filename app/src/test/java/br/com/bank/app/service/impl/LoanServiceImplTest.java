@@ -15,9 +15,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -40,7 +38,7 @@ class LoanServiceImplTest {
         this.customerDTO = CustomerDTO
                 .builder()
                 .name(faker.name().firstName())
-                .cpf("690.243.518-98")
+                .cpf("123.456.789-10")
                 .age(26)
                 .location("SP")
                 .income(BigDecimal.valueOf(6500))
@@ -60,26 +58,29 @@ class LoanServiceImplTest {
 
         assertNotNull(response);
         assertInstanceOf(LoanResponse.class, response);
+        assertTrue(response.loans().stream().anyMatch(loan -> "consigned".equalsIgnoreCase(loan.getType())));
+        assertTrue(response.loans().stream().anyMatch(loan -> "guarantee".equalsIgnoreCase(loan.getType())));
+        assertTrue(response.loans().stream().anyMatch(loan -> "personal".equalsIgnoreCase(loan.getType())));
 
-        verify(this.loanEngine, timeout(1)).getLoanList(loanRequest);
+        verify(this.loanEngine, times(1)).getLoanList(loanRequest);
     }
 
     private List<LoanModel> createModels(){
         List<LoanModel> listModels = new ArrayList<>();
 
-        List<String> types = new ArrayList<>();
-        types.add("consigned");
-        types.add("guarantee");
-        types.add("personal");
+        Map<String, Integer> typesAndTaxesMap = new HashMap<>();
+        typesAndTaxesMap.put("consigned", 2);
+        typesAndTaxesMap.put("guarantee", 3);
+        typesAndTaxesMap.put("personal", 4);
 
-        for (int i = 0; i < types.size(); i++) {
+        for (Map.Entry<String, Integer> loan : typesAndTaxesMap.entrySet()){
             LoanModel model = LoanModel
                     .builder()
-                    .type(types.get(i))
-                    .taxes(i+1)
+                    .type(loan.getKey())
+                    .taxes(loan.getValue())
                     .build();
 
-            listModels.add(i, model);
+            listModels.add(model);
         }
 
         return listModels;
