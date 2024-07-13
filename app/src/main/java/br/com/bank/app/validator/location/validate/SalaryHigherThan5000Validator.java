@@ -8,8 +8,9 @@ import java.math.BigDecimal;
 @Component
 public class SalaryHigherThan5000Validator implements LoanValidator {
     public static final int AGE = 30;
+
     @Override
     public boolean validate(BigDecimal income, int age, String location) {
-        return income.doubleValue() >= 5000 && age < AGE;
+        return income.doubleValue() >= 5000 && age >= MINIMUM_AGE && age < AGE;
     }
 }

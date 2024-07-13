@@ -10,6 +10,6 @@ import java.math.BigDecimal;
 public class SpLocationSalaryUntil5000Validator extends SpLocation implements LoanValidator {
     @Override
     public boolean validate(BigDecimal income, int age, String location) {
-        return income.doubleValue() > 3000 && income.doubleValue() < 5000 && LOCATION.equalsIgnoreCase(location);
+        return income.doubleValue() > 3000 && income.doubleValue() < 5000 && LOCATION.equalsIgnoreCase(location) && age >= MINIMUM_AGE;
     }
 }
