@@ -1,6 +1,5 @@
 package br.com.bank.app.validator.location.validate;
 
-import br.com.bank.app.validator.location.validate.sp.SpLocationSalaryLowerThan3000Validator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,7 +27,7 @@ class SalaryHigherThan5000ValidatorTest {
 
     @ParameterizedTest()
     @DisplayName("Deve validar como false quando os parametros forem errados")
-    @CsvSource({"7500, 35, MG", "5000, 45, SP", "1000, 29, RJ"})
+    @CsvSource({"7500, 35, MG", "5000, 45, SP", "1000, 29, RJ", "8000, 17, SP"})
     public void testValidateShouldReturnFalseWhenSendValidParams(BigDecimal income, int age, String location){
         var validation = this.salaryHigherThan5000Validator.validate(income, age, location);
 

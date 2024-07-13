@@ -27,7 +27,7 @@ class SpLocationSalaryUntil5000ValidatorTest {
 
     @ParameterizedTest()
     @DisplayName("Deve validar como false quando os parametros forem errados")
-    @CsvSource({"2500, 25, MG", "5000, 20, SP", "1000, 29, RJ"})
+    @CsvSource({"2500, 25, MG", "5000, 20, SP", "1000, 29, RJ", "8000, 17, SP"})
     public void testValidateShouldReturnFalseWhenSendValidParams(BigDecimal income, int age, String location){
         var validation = this.spLocationSalaryUntil5000Validator.validate(income, age, location);
 
