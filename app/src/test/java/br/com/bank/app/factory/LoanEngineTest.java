@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +27,7 @@ class LoanEngineTest {
 
     @BeforeEach
     public void setup() {
-        List<LoanFactory> factoryList = Arrays.asList(loanFactory);
+        List<LoanFactory> factoryList = List.of(loanFactory);
         loanEngine = new LoanEngine(factoryList);
     }
 
