@@ -18,6 +18,6 @@ public class SpLocationSalaryLowerThan3000Validator extends SpLocation implement
             throw new AgeLessThanMinimumException(MINIMUM_AGE_MSG);
         }
 
-        return income.doubleValue() <= 3000 && age < AGE && LOCATION.equalsIgnoreCase(location) && age >= MINIMUM_AGE;
+        return income.doubleValue() <= 3000 && age < AGE && LOCATION.equalsIgnoreCase(location);
     }
 }

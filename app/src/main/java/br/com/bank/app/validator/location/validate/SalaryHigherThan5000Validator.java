@@ -18,6 +18,6 @@ public class SalaryHigherThan5000Validator implements LoanValidator {
             throw new AgeLessThanMinimumException(MINIMUM_AGE_MSG);
         }
 
-        return income.doubleValue() >= 5000 && age >= MINIMUM_AGE && age < AGE;
+        return income.doubleValue() >= 5000 && age < AGE;
     }
 }
