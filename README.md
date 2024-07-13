@@ -13,7 +13,6 @@ Olá! Este é o meu projeto para o desafio back-end proposto pela Creditas. O ob
 - Java
 - SpringBoot Web
 - JUnit
-- Design Patterns: Factory, Chain of Responsibility
 
 
 
