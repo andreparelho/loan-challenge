@@ -21,6 +21,6 @@ public class PersonalLoan implements LoanFactory {
 
     @Override
     public boolean isAvailableLoan(BigDecimal income, int age, String location) {
-        return income.doubleValue() >= MINIMUM_INCOME;
+        return income.doubleValue() >= MINIMUM_INCOME && age >= MINIMUM_AGE;
     }
 }

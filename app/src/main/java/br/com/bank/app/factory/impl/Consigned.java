@@ -20,6 +20,6 @@ public class Consigned implements LoanFactory {
 
     @Override
     public boolean isAvailableLoan(BigDecimal income, int age, String location) {
-        return income.doubleValue() >= 5000;
+        return income.doubleValue() >= 5000 && age >= MINIMUM_AGE;
     }
 }
