@@ -72,7 +72,7 @@ class GuaranteeLoanTest {
 
     @Test
     @DisplayName("Deve retornar false quando os parametros estiverem errados")
-    public void testIsAvaiableLoanShouldReturnFalseWhenParametersIsValid(){
+    public void testIsAvaiableLoanShouldReturnFalseWhenParametersIsInvalid(){
         LoanRequest loanRequest = new LoanRequest(CustomerDTO
                 .builder()
                 .name("name")

@@ -3,6 +3,7 @@ package br.com.bank.app.service.impl;
 import br.com.bank.app.controller.dto.CustomerDTO;
 import br.com.bank.app.controller.dto.LoanRequest;
 import br.com.bank.app.controller.dto.LoanResponse;
+import br.com.bank.app.exception.request.NameIsBlankRequestException;
 import br.com.bank.app.factory.LoanEngine;
 import br.com.bank.app.model.LoanModel;
 import com.github.javafaker.Faker;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -63,6 +66,29 @@ class LoanServiceImplTest {
         assertTrue(response.loans().stream().anyMatch(loan -> "personal".equalsIgnoreCase(loan.getType())));
 
         verify(this.loanEngine, times(1)).getLoanList(loanRequest);
+    }
+
+    @ParameterizedTest()
+    @DisplayName("Deve lancar uma exception quando os a idade for menor que 18")
+    @CsvSource({"2500, 14, MG", "5000, 17, SP", "1000, 16, RJ"})
+    public void testValidateShouldReturnExceptionWhenSendInvalidAge(BigDecimal income, int age, String location){
+        this.customerDTO = CustomerDTO
+                .builder()
+                .name("")
+                .cpf("123.456.789-10")
+                .age(age)
+                .location(location)
+                .income(income)
+                .build();
+
+        this.loanRequest = new LoanRequest(customerDTO);
+
+        Throwable exceptionMethod = assertThrows(Throwable.class, () -> {
+            this.loanService.getLoans(loanRequest);
+        });
+
+        assertThrows(NameIsBlankRequestException.class, () -> this.loanService.getLoans(loanRequest));
+        assertEquals("name parameters is blank", exceptionMethod.getMessage());
     }
 
     private List<LoanModel> createModels(){

@@ -2,10 +2,13 @@ package br.com.bank.app.factory.impl;
 
 import br.com.bank.app.controller.dto.CustomerDTO;
 import br.com.bank.app.controller.dto.LoanRequest;
+import br.com.bank.app.exception.request.AgeLessThanMinimumException;
 import br.com.bank.app.model.LoanModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -53,7 +56,7 @@ class ConsignedTest {
 
     @Test
     @DisplayName("Deve retornar false quando os parametros estiverem errados")
-    public void testIsAvaiableLoanShouldReturnFalseWhenParametersIsValid(){
+    public void testIsAvaiableLoanShouldReturnFalseWhenParametersIsInvalid(){
         LoanRequest loanRequest = new LoanRequest(CustomerDTO
                 .builder()
                 .name("name")
@@ -66,5 +69,17 @@ class ConsignedTest {
         var availableLoan = this.consigned.isAvailableLoan(loanRequest.customerDTO().getIncome(), loanRequest.customerDTO().getAge(), loanRequest.customerDTO().getLocation());
 
         assertFalse(availableLoan);
+    }
+
+    @ParameterizedTest()
+    @DisplayName("Deve lancar uma exception quando os a idade for menor que 18")
+    @CsvSource({"2500, 14, MG", "5000, 17, SP", "1000, 16, RJ"})
+    public void testValidateShouldReturnExceptionWhenSendInvalidAge(BigDecimal income, int age, String location){
+        Throwable exceptionMethod = assertThrows(Throwable.class, () -> {
+            this.consigned.isAvailableLoan(income, age, location);
+        });
+
+        assertThrows(AgeLessThanMinimumException.class, () -> this.consigned.isAvailableLoan(income, age, location));
+        assertEquals("your age is not allowed", exceptionMethod.getMessage());
     }
 }
