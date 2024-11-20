@@ -57,11 +57,12 @@ class LoanControllerIntegrationTest {
         assertInstanceOf(String.class, response.getBody().customer());
         assertInstanceOf(List.class, response.getBody().loans());
 
-        for (LoanModel loanModel : response.getBody().loans()){
+        response.getBody().loans().forEach(loanModel -> {
             assertNotNull(loanModel.getType());
             assertInstanceOf(String.class, loanModel.getType());
             assertInstanceOf(Integer.class, loanModel.getTaxes());
-        }
+        });
+
 
         var consignedList = response.getBody().loans().get(0);
         taxes = 2;

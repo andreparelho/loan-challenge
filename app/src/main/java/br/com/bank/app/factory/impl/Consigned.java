@@ -12,6 +12,7 @@ import static br.com.bank.app.util.LoanConstants.MINIMUM_AGE_MSG;
 @Component
 public class Consigned implements LoanFactory {
     private static final String TYPE = "consigned";
+    private static final int INCOME_FIVE_THOUSAND = 5000;
 
     @Override
     public LoanModel getLoanModel() {
@@ -28,6 +29,6 @@ public class Consigned implements LoanFactory {
             throw new AgeLessThanMinimumException(MINIMUM_AGE_MSG);
         }
 
-        return income.doubleValue() >= 5000;
+        return income.doubleValue() >= INCOME_FIVE_THOUSAND;
     }
 }

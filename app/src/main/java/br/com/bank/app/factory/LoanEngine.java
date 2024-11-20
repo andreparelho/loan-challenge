@@ -18,13 +18,16 @@ public class LoanEngine {
     public List<LoanModel> getLoanList(LoanRequest loanRequest){
         List<LoanModel> loanList = new ArrayList<>();
 
-        for (LoanFactory loanFactory : factoryList){
+        factoryList.forEach(loanFactory -> {
+            boolean loanOptional = loanFactory.isAvailableLoan(
+                    loanRequest.customerDTO().getIncome(),
+                    loanRequest.customerDTO().getAge(),
+                    loanRequest.customerDTO().getLocation());
 
-            boolean loanOptional = loanFactory.isAvailableLoan(loanRequest.customerDTO().getIncome(), loanRequest.customerDTO().getAge(), loanRequest.customerDTO().getLocation());
             if (loanOptional){
                 loanList.add(loanFactory.getLoanModel());
             }
-        }
+        });
 
        return loanList;
     }

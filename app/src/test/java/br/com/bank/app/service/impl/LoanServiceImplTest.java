@@ -99,7 +99,7 @@ class LoanServiceImplTest {
         typesAndTaxesMap.put("guarantee", 3);
         typesAndTaxesMap.put("personal", 4);
 
-        for (Map.Entry<String, Integer> loan : typesAndTaxesMap.entrySet()){
+        typesAndTaxesMap.entrySet().forEach(loan -> {
             LoanModel model = LoanModel
                     .builder()
                     .type(loan.getKey())
@@ -107,7 +107,7 @@ class LoanServiceImplTest {
                     .build();
 
             listModels.add(model);
-        }
+        });
 
         return listModels;
     }
